@@ -3,9 +3,9 @@ FROM python:3.7-alpine
 ENV PYTHONUNBUFFERED 1
 
 COPY ./requirements.txt /requirements.txt
-RUN apk add --update --no-cache jpeg-dev
+RUN apk add --update --no-cache jpeg-dev postgresql-client
 RUN apk add --update --no-cache --virtual .tmp-build-deps \
-    gcc musl-dev zlib zlib-dev
+    gcc musl-dev zlib zlib-dev libc-dev linux-headers postgresql-dev
 RUN pip install -r /requirements.txt
 RUN apk del .tmp-build-deps
 

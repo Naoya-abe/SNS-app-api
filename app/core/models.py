@@ -55,3 +55,48 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.displayName
+
+
+class FriendRequest(models.Model):
+    askFrom = models.ForeignKey(
+        settings.AUTH_USER_MODEL, related_name='askFrom',
+        on_delete=models.CASCADE
+    )
+    askTo = models.ForeignKey(
+        settings.AUTH_USER_MODEL, related_name='askTo',
+        on_delete=models.CASCADE
+    )
+    approved = models.BooleanField(default=False)
+
+    class Meta:
+        unique_together = (('askFrom','askTo'),)
+    
+    def __str__(self):
+        return str(self.askFrom) + '------->' + str(self.askTo)
+
+
+class Message(models.Model):
+    sender=models.ForeignKey(
+        settings.AUTH_USER_MODEL, related_name='sender',
+        on_delete=models.CASCADE
+    )
+    receiver=models.ForeignKey(
+        settings.AUTH_USER_MODEL, related_name='receiver',
+        on_delete=models.CASCADE
+    )
+    message=models.CharField(max_length=140)
+
+    def __str__(self):
+        return str(self.sender)
+
+
+class Post(models.Model):
+    postFrom=models.ForeignKey(
+        settings.AUTH_USER_MODEL, related_name='postFrom',
+        on_delete=models.CASCADE
+    )
+    content=models.CharField(max_length=140)
+
+    def __str__(self):
+        return self.postFrom
+

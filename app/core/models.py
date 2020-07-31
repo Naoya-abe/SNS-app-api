@@ -76,26 +76,26 @@ class FriendRequest(models.Model):
 
 
 class Message(models.Model):
-    sender=models.ForeignKey(
+    sender = models.ForeignKey(
         settings.AUTH_USER_MODEL, related_name='sender',
         on_delete=models.CASCADE
     )
-    receiver=models.ForeignKey(
+    receiver = models.ForeignKey(
         settings.AUTH_USER_MODEL, related_name='receiver',
         on_delete=models.CASCADE
     )
-    message=models.CharField(max_length=140)
+    message = models.CharField(max_length=140)
 
     def __str__(self):
         return str(self.sender)
 
 
 class Post(models.Model):
-    postFrom=models.ForeignKey(
+    postFrom = models.ForeignKey(
         settings.AUTH_USER_MODEL, related_name='postFrom',
         on_delete=models.CASCADE
     )
-    content=models.CharField(max_length=140)
+    content = models.CharField(max_length=140)
 
     def __str__(self):
         return self.postFrom

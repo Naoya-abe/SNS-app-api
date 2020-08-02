@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from django.model import Q
+from django.db.models import Q
 from rest_framework import generics, viewsets, authentication, permissions, status
-from rest_framework import ValidationError
+from rest_framework.exceptions import ValidationError
 from api_user import serializers
 from core import custompermissions
 from core.models import FriendRequest, Profile
@@ -15,7 +15,7 @@ class FriendRequestViewSet(viewsets.ModelViewSet):
     queryset = FriendRequest.objects.all()
     serializer_class = serializers.FriendRequestSerializer
     authentication_classes = (authentication.TokenAuthentication,)
-    permission_classes = (permissioins.IsAuthenticated,)
+    permission_classes = (permissions.IsAuthenticated,)
 
     def get_queryset(self):
         # Return only the data that is relevant to request user.

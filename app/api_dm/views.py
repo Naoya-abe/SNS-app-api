@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import viewsets, authentication, permissions, status
 from rest_framework.exceptions import ValidationError
-from rest_framework.response import response
+from rest_framework.response import Response
 from api_dm import serializers
 from core.models import Message
 

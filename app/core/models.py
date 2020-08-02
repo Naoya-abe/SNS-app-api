@@ -5,11 +5,11 @@ from django.conf import settings
 
 def upload_path(instance, filename):
     ext = filename.split('.')[-1]
-    return '/'.join(['image', str(instanse.userPro.id)+str(instance.displayName)+str('.')+str(ext)])
+    return '/'.join(['image', str(instance.userPro.id)+str(instance.displayName)+str('.')+str(ext)])
 
 
 class UserManager(BaseUserManager):
-    
+
     def create_user(self, email, password=None, **extra_fields):
         """Creats and saves a new user"""
         if not email:
@@ -23,7 +23,7 @@ class UserManager(BaseUserManager):
 
     def create_superuser(self, email, password):
         """Creates and saves a new super user"""
-        user=self.create_user(email, password)
+        user = self.create_user(email, password)
         user.is_staff = True
         user.is_superuser = True
         user.save(using=self._db)
@@ -69,8 +69,8 @@ class FriendRequest(models.Model):
     approved = models.BooleanField(default=False)
 
     class Meta:
-        unique_together = (('askFrom','askTo'),)
-    
+        unique_together = (('askFrom', 'askTo'),)
+
     def __str__(self):
         return str(self.askFrom) + '------->' + str(self.askTo)
 
@@ -99,4 +99,3 @@ class Post(models.Model):
 
     def __str__(self):
         return self.postFrom
-

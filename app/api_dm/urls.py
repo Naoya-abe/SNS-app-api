@@ -6,7 +6,7 @@ app_name = 'dm'
 
 router = DefaultRouter()
 router.register('message', views.MessageViewSet)
-router.register('inbox', vires.InboxListView)
+router.register('inbox', views.InboxListView)
 
 urlpatterns = [
     path('', include(router.urls))

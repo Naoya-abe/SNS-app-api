@@ -48,7 +48,7 @@ class Profile(models.Model):
 
     displayName = models.CharField(max_length=20, unique=True)
     userPro = models.OneToOneField(
-        settings.AUTH_USER_MODEL, related_name='userPro', on_delete=models.CASCADE)
+        settings.AUTH_USER_MODEL, related_name='profile', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     avatar = models.ImageField(blank=True, null=True, upload_to=upload_path)
     about = models.CharField(max_length=255, blank=True)
@@ -87,7 +87,7 @@ class Message(models.Model):
     message = models.CharField(max_length=140)
 
     def __str__(self):
-        return str(self.sender)
+        return str(self.sender) + '------>' + str(self.receiver)
 
 
 class Post(models.Model):
@@ -98,4 +98,4 @@ class Post(models.Model):
     content = models.CharField(max_length=140)
 
     def __str__(self):
-        return self.postFrom
+        return str(self.postFrom) +'：' + self.content

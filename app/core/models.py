@@ -45,7 +45,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 class Profile(models.Model):
-
     displayName = models.CharField(max_length=20, unique=True)
     userPro = models.OneToOneField(
         settings.AUTH_USER_MODEL, related_name='profile', on_delete=models.CASCADE)
@@ -92,7 +91,7 @@ class Message(models.Model):
 
 class Post(models.Model):
     postFrom = models.ForeignKey(
-        settings.AUTH_USER_MODEL, related_name='postFrom',
+        'Profile', related_name='postFrom',
         on_delete=models.CASCADE
     )
     content = models.CharField(max_length=140)

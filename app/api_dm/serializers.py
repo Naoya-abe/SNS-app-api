@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
-from core.models import Message, Profile, FriendRequest
+from core.models import Message, FriendRequest
 from django.db.models import Q
 
 
@@ -22,6 +22,7 @@ class FriendsFilter(serializers.PrimaryKeyRelatedField):
         # 抜き出した「id」を元にユーザのオブジェクトを取得
         queryset = get_user_model().objects.filter(id__in=list_friend)
         return queryset
+
 
 class MessageSerializer(serializers.ModelSerializer):
 

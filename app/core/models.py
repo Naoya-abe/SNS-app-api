@@ -9,21 +9,25 @@ def upload_path(instance, filename):
 
 
 class UserManager(BaseUserManager):
+    """Manager for user"""
 
-    def create_user(self, email, password=None, **extra_fields):
+    def create_user(self, email, displayName, password=None):
         """Creats and saves a new user"""
         if not email:
             raise ValueError('Users must have an email address')
 
-        user = self.model(email=self.normalize_email(email), **extra_fields)
+        user = self.model(
+            email=self.normalize_email(email),
+            displayName=displayName,
+        )
         user.set_password(password)
         user.save(using=self._db)
 
         return user
 
-    def create_superuser(self, email, password):
+    def create_superuser(self, email, displayName, password):
         """Creates and saves a new super user"""
-        user = self.create_user(email, password)
+        user = self.create_user(email, displayName, password)
         user.is_staff = True
         user.is_superuser = True
         user.save(using=self._db)
@@ -32,31 +36,24 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    """Custom user model that supports using email instead of username"""
+    """Database model for users in the system"""
     email = models.EmailField(max_length=50, unique=True)
+    displayName = models.CharField(max_length=20, unique=True)
+    avatar = models.ImageField(blank=True, null=True, upload_to=upload_path)
+    about = models.CharField(max_length=255, blank=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['displayName']
 
     def __str__(self):
         return self.email
 
 
-class Profile(models.Model):
-    displayName = models.CharField(max_length=20, unique=True)
-    userPro = models.OneToOneField(
-        settings.AUTH_USER_MODEL, related_name='profile', on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True)
-    avatar = models.ImageField(blank=True, null=True, upload_to=upload_path)
-    about = models.CharField(max_length=255, blank=True)
-
-    def __str__(self):
-        return self.displayName
-
-
 class FriendRequest(models.Model):
+    """Database model for friend requests in the system"""
     askFrom = models.ForeignKey(
         settings.AUTH_USER_MODEL, related_name='askFrom',
         on_delete=models.CASCADE
@@ -75,6 +72,7 @@ class FriendRequest(models.Model):
 
 
 class Message(models.Model):
+    """Database model for messages in the system"""
     sender = models.ForeignKey(
         settings.AUTH_USER_MODEL, related_name='sender',
         on_delete=models.CASCADE
@@ -90,11 +88,12 @@ class Message(models.Model):
 
 
 class Post(models.Model):
+    """Database model for posts in the system"""
     postFrom = models.ForeignKey(
-        'Profile', related_name='postFrom',
+        settings.AUTH_USER_MODEL, related_name='postFrom',
         on_delete=models.CASCADE
     )
     content = models.CharField(max_length=140)
 
     def __str__(self):
-        return str(self.postFrom) +'：' + self.content
+        return str(self.postFrom) + '：' + self.content

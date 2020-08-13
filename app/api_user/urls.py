@@ -5,11 +5,10 @@ from api_user import views
 app_name = 'user'
 
 router = DefaultRouter()
-router.register('profile', views.ProfileViewSet)
+router.register('profiles', views.UserViewSet)
 router.register('approval', views.FriendRequestViewSet)
 
 urlpatterns = [
-    path('signup/', views.CreateUserView.as_view(), name='signup'),
     path('myprofile/', views.MyProfileListView.as_view(), name='myprofile'),
     path('', include(router.urls))
 ]

@@ -8,5 +8,6 @@ router = DefaultRouter()
 router.register('', views.PostViewSet)
 
 urlpatterns = [
+    path('myposts/', views.MyPostListView.as_view(), name='myposts'),
     path('', include(router.urls))
 ]

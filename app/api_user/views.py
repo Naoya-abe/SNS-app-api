@@ -34,10 +34,10 @@ class FriendRequestViewSet(viewsets.ModelViewSet):
         except:
             raise ValidationError("User can have only unique request")
 
-    def destroy(self, request, *args, **kwargs):
-        # Disabling the destroy method
-        response = {'message': 'Delete is not allowed !'}
-        return Response(response, status=status.HTTP_400_BAD_REQUEST)
+    # def destroy(self, request, *args, **kwargs):
+    #     # Disabling the destroy method
+    #     response = {'message': 'Delete is not allowed !'}
+    #     return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
     def partial_update(self, request, *args, **kwargs):
         # Disabling the partial_update method

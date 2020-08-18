@@ -54,3 +54,28 @@ class MyProfileListView(generics.ListAPIView):
 
     def get_queryset(self):
         return self.queryset.filter(id=self.request.user.id)
+
+
+class MyFollowListView(generics.ListAPIView):
+    """Retrieving own follow users"""
+    queryset = FriendRequest.objects.all()
+    serializer_class = serializers.FriendRequestSerializer
+    authentication_classes = (authentication.TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get_queryset(self):
+        # Return only the data that is relevant to request user.
+        return self.queryset.filter(askFrom=self.request.user.id)
+
+
+# class MyFollowerListView(generics.ListAPIView):
+#     """Retrieving own follower users"""
+#     queryset = FriendRequest.objects.all()
+#     serializer_class = serializers.FriendRequestSerializer
+#     authentication_classes = (authentication.TokenAuthentication,)
+#     permission_classes = (permissions.IsAuthenticated,)
+
+#     def get_queryset(self):
+#         # Return only the data that is relevant to request user.
+#         data = self.queryset.filter(askTo=self.request.user.id)
+#         return data.filter(approved=True)

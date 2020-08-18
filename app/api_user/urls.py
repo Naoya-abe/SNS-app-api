@@ -10,5 +10,6 @@ router.register('approval', views.FriendRequestViewSet)
 
 urlpatterns = [
     path('myprofile/', views.MyProfileListView.as_view(), name='myprofile'),
+    path('follow-list/', views.MyFollowListView.as_view(), name='follow_list'),
     path('', include(router.urls))
 ]

@@ -39,10 +39,10 @@ class FriendRequestViewSet(viewsets.ModelViewSet):
     #     response = {'message': 'Delete is not allowed !'}
     #     return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
-    def partial_update(self, request, *args, **kwargs):
-        # Disabling the partial_update method
-        response = {'message': 'Patch is not allowed'}
-        return Response(response, status=status.HTTP_400_BAD_REQUEST)
+    # def partial_update(self, request, *args, **kwargs):
+    #     # Disabling the partial_update method
+    #     response = {'message': 'Patch is not allowed'}
+    #     return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
 
 class MyProfileListView(generics.ListAPIView):

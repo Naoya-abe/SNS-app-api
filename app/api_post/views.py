@@ -30,3 +30,18 @@ class MyPostListView(generics.ListAPIView):
 
     def get_queryset(self):
         return self.queryset.filter(postFrom=self.request.user)
+
+
+class FriendPostListView(generics.ListAPIView):
+    """Retrieving friend posts"""
+    queryset = Post.objects.all()
+    serializer_class = serializers.PostSerializer
+    authentication_classes = (authentication.TokenAuthentication,)
+    permission_classes = (
+        permissions.IsAuthenticated,
+        custompermissions.PostPermission
+    )
+
+    def get_queryset(self):
+        friendId = (self.request.GET.get('friendId', 0))
+        return self.queryset.filter(postFrom=friendId)

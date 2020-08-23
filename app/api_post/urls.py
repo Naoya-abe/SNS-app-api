@@ -9,5 +9,6 @@ router.register('', views.PostViewSet)
 
 urlpatterns = [
     path('myposts/', views.MyPostListView.as_view(), name='myposts'),
+    path('friend-posts/', views.FriendPostListView.as_view(), name='friend-posts'),
     path('', include(router.urls))
 ]
